@@ -1,0 +1,80 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <style>
+    .layui-card-header {
+      border-bottom: 0;
+      height: 50px;
+    }
+  </style>
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      <li class="layui-this"><a href="{:url('admin/index')}">用户管理</a></li>
+      {if condition="checkPath('admin/add')"}
+        <li><a href="{:url('admin/add')}">添加用户</a></li>
+      {/if}
+    </ul>
+  </div>
+{/block}
+{block name="body"}
+  <div class="layui-card-body">
+    <table class="layui-table table table-hover table-bordered table-list" id="menus-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th width="30" class="tc">ID</th>
+          <th class="tc">所属角色</th>
+          <th class="tc">用户名</th>
+          <th class="tc">昵称</th>
+          <th class="tc">最后登录IP</th>
+          <th class="tc">最后登录时间</th>
+          <th width="50" class="tc">状态</th>
+          <th width="120" class="tc">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($list as $v){?>
+            <tr>
+                <td class="tc">{$v.id}</td>
+                <td class="tc">
+                  {if $v.id == 1}
+                    拥有网站最高管理员权限！
+                  {else /}
+                    {$v.name}
+                  {/if}
+                </td>
+                <td class="tc">{$v.login_user}</td>
+                <td class="tc">{$v.username}</td>
+                <td class="tc">{$v.last_login_ip}</td>
+                <td class="tc">{$v.last_login_time|date='Y-m-d H:i:s'}</td>
+                <td class="tc">
+                  <button style="border:0" type="button" post-url="{:url('admin/status', ['id' => $v['id'], 'status' => $v['status']])}" class="btn a-post btn-success" post-msg="确认进行该操作吗？">
+                    <?php if($v['status']==0){ ?>
+                      <font class="crp" color="green">开启</font>
+                    <?php }else{ ?>
+                      <font class="crp" color="red">禁用</font>
+                    <?php } ?>
+                  </button>
+                </td>
+                <td class="tc">
+                  <?php if($v['id']==1){ ?>
+                    <font color="#cccccc">权限设置</font> |
+                    <font color="#cccccc">编辑</font> |
+                    <font color="#cccccc">删除</font>
+                  <?php }else{ ?>
+                    {if checkPath('auth/adminAuthorize',['id'=>$v['id']])}
+                      <a href="<?php echo url('auth/adminAuthorize',['id'=>$v['id']])?>">查看权限</a> |
+                    {/if}
+                    {if checkPath('admin/edit', ['id'=>$v['id']])}
+                      <a href="{:url('admin/edit', ['id' => $v['id']])}">编辑</a> |
+                    {/if}
+                    {if checkPath('admin/deleted',['id'=>$v['id']])}
+                      <a class="a-post" style="cursor: pointer;" post-msg="删除数据不可恢复，确认删除吗？" post-url="<?php echo url('admin/deleted',['id'=>$v['id']])?>">删除</a>
+                    {/if}
+                  <?php } ?>
+                </td>
+            </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
+{/block}

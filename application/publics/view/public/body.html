@@ -1,0 +1,37 @@
+{include file="public:head" /}
+{load href="/static/js/bootstrap.min.js" /}
+
+<style>
+  .layui-tab-title .layui-this a {
+    color: #009688;
+  }
+  .tc {
+    text-align: center!important;
+  }
+  .crp {
+    cursor: pointer;
+  }
+</style>
+
+<div class="layui-fluid"  id="home">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-sm12">
+      <div class="layui-card">
+        <div class="layui-card-header">{block name="header"}{/block}</div>
+        <div class="layui-card-body">
+          {block name="body"}{/block}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+layui.use('form', function(){
+  var form = layui.form
+
+  form.render()
+})
+</script>
+
+{load href="/static/js/cmsinfo.js" /}

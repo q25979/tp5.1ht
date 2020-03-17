@@ -1,0 +1,54 @@
+<style>
+  .layui-form-item .layui-input-inline {
+    width: 300px;
+  }
+</style>
+
+<div class="layui-form" style="margin-top:15px;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">用户名</label>
+    <div class="layui-input-inline">
+
+      {if isset($info['login_user'])}
+      <input class="layui-input layui-btn-disabled" readonly type="text" value="<?php echo isset($info['login_user'])?$info['login_user']:''?>" name="login_user">
+      {else /}
+      <input class="layui-input" type="text" value="<?php echo isset($info['login_user'])?$info['login_user']:''?>" name="login_user">
+      {/if}
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">昵称</label>
+    <div class="layui-input-inline">
+      <input class="layui-input" type="text" value="<?php echo isset($info['username'])?$info['username']:''?>" name="username">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">密码</label>
+    <div class="layui-input-inline">
+      <input class="layui-input" type="password" name="login_pass">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">角色</label>
+    <div class="layui-input-inline">
+      <select class="layui-input" name="role_id">
+        <option value="0">请选择角色</option>
+        {foreach $role_list as $key => $vo}
+          {if isset($role_id) AND $role_id == $vo.id}
+          <option value="{$vo.id}" selected="selected">{$vo['name']}</option>
+          {else /}
+          <option value="{$vo.id}">{$vo['name']}</option>
+          {/if}
+        {/foreach}
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="button" class="layui-btn btn btn-primary ajax-post" autocomplete="off">
+        保存
+      </button>
+      <a class="layui-btn layui-btn-primary" href="JavaScript:history.go(-1)">返回</a>
+    </div>
+  </div>
+</div>

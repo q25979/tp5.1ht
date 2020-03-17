@@ -1,0 +1,27 @@
+{extend name="public:body" /}
+
+{block name="header"}
+  <style>
+    .layui-card-header {
+      border-bottom: 0;
+      height: 50px;
+    }
+  </style>
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title" style="padding:10px 0;height:30px;">
+      {if checkPath('admin/index')}
+      <li><a href="{:url('admin/index')}">用户管理</a></li>
+      {/if}
+      {if checkPath('admin/add')}
+      <li><a href="{:url('admin/add')}">添加用户</a></li>
+      {/if}
+      <li class="layui-this"><a href="">编辑用户</a></li>
+    </ul>
+  </div>
+{/block}
+
+{block name="body"}
+  <form class="form-horizontal" action="{:url('admin/edit')}" method="post">
+    {include file="admin:form" /}
+  </form>
+{/block}
